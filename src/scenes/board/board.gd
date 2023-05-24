@@ -30,7 +30,7 @@ func gen_board():
 		for c in range(_size):
 			
 			# choose which is empty cell
-			if (value == _size*_size):
+			if (value == _size * _size):
 				board[r].append(0)
 				empty = Vector2(c, r)
 			else:
@@ -259,20 +259,20 @@ func slide_row(row, dir, limiter):
 	var empty_index = row.find(0)
 	if dir == 1:
 		# slide towards the right
-		var start = row.slice(0, limiter)
+		var start = row.slice(0, limiter + 1)
 		start.pop_back()
-		var pre = row.slice(limiter, empty_index)
+		var pre = row.slice(limiter, empty_index + 1)
 		pre.pop_back()
 		var post = row.slice(empty_index, row.size())
 		post.pop_front()
 		return start + [0] + pre + post
 	else:
 		# slide towards the left
-		var pre = row.slice(0, empty_index)
+		var pre = row.slice(0, empty_index + 1)
 		pre.pop_back()
-		var post = row.slice(empty_index, limiter)
+		var post = row.slice(empty_index, limiter + 1)
 		post.pop_front()
-		var end = row.slice(limiter, row.size() - 1)
+		var end = row.slice(limiter, row.size())
 		end.pop_front()
 		return pre + post + [0] + end
 
@@ -281,22 +281,21 @@ func slide_column(col, dir, limiter):
 
 	if dir == 1:
 		# slide down
-		var start = col.slice(0, limiter)
+		var start = col.slice(0, limiter + 1)
 		start.pop_back()
-		var pre = col.slice(limiter, empty_index)
+		var pre = col.slice(limiter, empty_index + 1)
 		pre.pop_back()
-		var post = col.slice(empty_index, col.size() - 1)
+		var post = col.slice(empty_index, col.size())
 		post.pop_front()
 
 		return start + [0] + pre + post
 	else:
 		# slide up
-		# slide towards the left
-		var pre = col.slice(0, empty_index)
+		var pre = col.slice(0, empty_index + 1)
 		pre.pop_back()
-		var post = col.slice(empty_index, limiter)
+		var post = col.slice(empty_index, limiter + 1)
 		post.pop_front()
-		var end = col.slice(limiter, col.size() - 1)
+		var end = col.slice(limiter, col.size())
 		end.pop_front()
 		return pre + post + [0] + end
 

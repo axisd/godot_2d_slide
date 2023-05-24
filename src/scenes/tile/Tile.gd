@@ -39,8 +39,9 @@ func set_sprite_texture(texture):
 # slide the tile to a new position
 func slide_to(new_position, duration):
 	var tween = get_tree().create_tween()
-	tween.finished.connect(_on_tween_tween_completed)
-	tween.tween_property(self, "rect_position", new_position, duration)
+	tween.tween_property(self, "position", new_position, duration)
+	await tween.finished
+	_on_tween_tween_completed()
 
 # hide/show the number of the tile
 func set_number_visible(state):
@@ -51,5 +52,5 @@ func _on_tile_pressed():
 	emit_signal("tile_pressed", number)
 
 # tile has finished sliding
-func _on_tween_tween_completed(_object, _key):
+func _on_tween_tween_completed():
 	emit_signal("slide_completed", number)
